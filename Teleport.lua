@@ -12,9 +12,11 @@ local function findPlayerByUsername(username)
 end
 
 local function teleportToLocalPlayer(targetPlayer)
-    local humanoid = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if humanoid and targetPlayer.Character then
-        humanoid.Parent = targetPlayer.Character
+    local humanoidRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local targetRoot = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRoot and targetRoot then
+        humanoidRoot.CFrame = CFrame.new(targetRoot.Position)
     end
 end
 
@@ -23,7 +25,7 @@ local targetPlayer = findPlayerByUsername(targetPlayerName)
 if targetPlayer then
     teleportToLocalPlayer(targetPlayer)
 else
-    warn("Player not found:", targetPlayerName) -- Warns if the inputted player in the "targetPlayerName" variable doesn't exists.
+    warn("Player not found:", targetPlayerName) -- Warns if the inputted player in the "targetPlayerName" variable doesn't exist.
 end
 
 -- Script by Kaizerr <:3
